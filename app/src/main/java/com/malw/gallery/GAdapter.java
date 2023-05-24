@@ -17,28 +17,21 @@ import java.util.ArrayList;
 public class GAdapter extends RecyclerView.Adapter<GAdapter.ViewHolder> {
     private ArrayList<Image> images;
     private Context context;
-    public GAdapter(Context context, ArrayList<Image> galleryList) {
-        this.context = context;
-        this.galleryList = galleryList;
-    }
+    // нахрен он нужен этот context???
 
-    // Create new views (invoked by the layout manager)
+    public GAdapter(Context context, ArrayList<Image> images) {
+        this.context = context;
+        this.images = images;
+    }
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
-                                         int viewType) {
-        // create a new view
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.image, parent, false);
-        return new ViewHolder(view);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.image, parent, false));
     }
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
         viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        setImageFromPath(galleryList.get(position).getPath(), viewHolder.img);
+        setImageFromPath(images.get(position).getPath(), viewHolder.img);
         viewHolder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
