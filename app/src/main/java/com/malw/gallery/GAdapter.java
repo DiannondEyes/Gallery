@@ -34,6 +34,7 @@ public class GAdapter extends RecyclerView.Adapter<GAdapter.ViewHolder> {
         setImageFromPath(images.get(position).getPath(), viewHolder.img);
         viewHolder.img.setOnClickListener(v -> {
             // тут хрень с открытием изображения в полный экран
+
             Toast.makeText(context, images.get(position).getTitle(), Toast.LENGTH_SHORT).show();
         });
     }
