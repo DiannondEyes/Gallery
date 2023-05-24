@@ -32,33 +32,22 @@ public class GAdapter extends RecyclerView.Adapter<GAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
         setImageFromPath(images.get(position).getPath(), viewHolder.img);
-        viewHolder.img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO что-то может происходить, если кликнуть на изображение
-                Toast.makeText(context, "" + galleryList.get(position).getTitle(), Toast.LENGTH_SHORT).show();
-            }
+        viewHolder.img.setOnClickListener(v -> {
+            // тут хрень с открытием изображения в полный экран
+            Toast.makeText(context, images.get(position).getTitle(), Toast.LENGTH_SHORT).show();
         });
     }
-
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
         public ImageView img;
-
         public ViewHolder(View view) {
             super(view);
             img = view.findViewById(R.id.img);
         }
     }
 
-
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return galleryList.size();
+        return images.size();
     }
 
     private void setImageFromPath(String path, ImageView image) {

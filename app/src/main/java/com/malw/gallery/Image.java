@@ -10,4 +10,5 @@ public class Image {
     }
 
     public String getPath() {return this.path;}
+    public String getTitle() {return this.title;}
 }
