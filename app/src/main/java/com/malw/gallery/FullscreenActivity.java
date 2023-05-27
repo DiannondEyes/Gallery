@@ -14,3 +14,4 @@ public class FullscreenActivity extends AppCompatActivity {
         viewPager.setCurrentItem(getIntent().getIntExtra("image_index", 0));
     }
 }
+
