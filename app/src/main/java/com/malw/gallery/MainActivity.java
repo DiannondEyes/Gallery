@@ -53,30 +53,24 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 startActivity(getIntent());
             } else {
-                Toast.makeText(this, "Нет разрешения на доступ к файлам!", Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
                 builder1.setMessage("Нет разрешения на доступ к файлам");
                 builder1.setCancelable(true);
 
                 builder1.setPositiveButton(
                         "Открыть настройки",
-                        new DialogInterface.OnClickListener() {
-                            @SuppressWarnings("deprecation")
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                intent.setData(Uri.parse("package:" + getPackageName()));
-                                startActivity(intent);
-                            }
+                        (dialog, id) -> {
+                            dialog.cancel();
+                            Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            intent.setData(Uri.parse("package:" + getPackageName()));
+                            startActivity(intent);
                         });
 
                 builder1.setNegativeButton(
                         "Закрыть",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                finish();
-                            }
+                        (dialog, id) -> {
+                            dialog.cancel();
+                            finish();
                         });
 
                 AlertDialog alert11 = builder1.create();
