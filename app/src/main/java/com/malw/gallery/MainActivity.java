@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
             recyclerView.setItemViewCacheSize(20);
             recyclerView.setDrawingCacheEnabled(true);
-            recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+            recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
             recyclerView.setAdapter(new GAdapter(getApplicationContext(), images));
         } else {
             if (android.os.Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
