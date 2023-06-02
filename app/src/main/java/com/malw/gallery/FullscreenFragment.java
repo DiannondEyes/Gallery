@@ -6,7 +6,8 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -25,8 +26,7 @@ import java.time.format.DateTimeFormatter;
 
 public class FullscreenFragment extends Fragment {
     private static final String ARG_IMAGE_PATH = "image_path";
-    private boolean isDateVisible = false;
-
+    private Handler handler = new Handler();
 
     // Создаем новый экземпляр фрагмента с указанным путем к изображению
     public static FullscreenFragment newInstance(String imagePath) {
@@ -56,26 +56,30 @@ public class FullscreenFragment extends Fragment {
         return view;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void toggleDateVisibility(View view) {
         TextView dateTextView = view.findViewById(R.id.date_text_view);
-        if (isDateVisible) {
+        Animation fadeInOut = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in_out);
+        Runnable hideDateRunnable = () -> {
+            if (dateTextView.getVisibility() == View.VISIBLE) {
+                dateTextView.setVisibility(View.GONE);
+            }
+        };
+        if (dateTextView.getVisibility() == View.VISIBLE) {
             dateTextView.setVisibility(View.GONE);
-            isDateVisible = false;
-        } else {
+            handler.removeCallbacks(hideDateRunnable);
+        }
+        else {
             Image image = getImage();
             if (image != null) {
-                String date = getCreationDate(image.getPath());
+                String date = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    date = getCreationDate(image.getPath());
+                }
                 dateTextView.setText(date);
                 dateTextView.setVisibility(View.VISIBLE);
-                isDateVisible = true;
-
+                dateTextView.startAnimation(fadeInOut);
                 // Скрываем TextView через 5 секунд
-                Handler handler = new Handler();
-                handler.postDelayed(() -> {
-                    dateTextView.setVisibility(View.GONE);
-                    isDateVisible = false;
-                }, 5000);
+                handler.postDelayed(hideDateRunnable, 5000);
             }
         }
     }
@@ -103,7 +107,7 @@ public class FullscreenFragment extends Fragment {
             if (attributes != null) {
                 Instant instant = attributes.creationTime().toInstant();
                 LocalDateTime ldt = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
-                return ldt.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                return ldt.format(DateTimeFormatter.ofPattern("d MMMM yyyy"));
             }
         }
         return "";

@@ -2,7 +2,6 @@ package com.malw.gallery;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -16,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -60,23 +60,18 @@ public class MainActivity extends AppCompatActivity {
 
                 builder1.setPositiveButton(
                         "Открыть настройки",
-                        new DialogInterface.OnClickListener() {
-                            @SuppressWarnings("deprecation")
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                intent.setData(Uri.parse("package:" + getPackageName()));
-                                startActivity(intent);
-                            }
+                        (dialog, id) -> {
+                            dialog.cancel();
+                            Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            intent.setData(Uri.parse("package:" + getPackageName()));
+                            startActivity(intent);
                         });
 
                 builder1.setNegativeButton(
                         "Закрыть",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                finish();
-                            }
+                        (dialog, id) -> {
+                            dialog.cancel();
+                            finish();
                         });
 
                 AlertDialog alert11 = builder1.create();
