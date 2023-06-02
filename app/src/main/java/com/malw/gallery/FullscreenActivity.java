@@ -13,5 +13,6 @@ public class FullscreenActivity extends AppCompatActivity {
         viewPager.setAdapter(new FullscreenPagerAdapter(getSupportFragmentManager(), getIntent().getParcelableArrayListExtra("images")));
         viewPager.setCurrentItem(getIntent().getIntExtra("image_index", 0));
     }
+
 }
 
