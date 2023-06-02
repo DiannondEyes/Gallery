@@ -38,14 +38,3 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 }
-allprojects {
-    repositories {
-        maven { url "https://www.jitpack.io" }
-    }
-}
-
-buildscript {
-    repositories {
-        maven { url "https://www.jitpack.io" }
-    }
-}

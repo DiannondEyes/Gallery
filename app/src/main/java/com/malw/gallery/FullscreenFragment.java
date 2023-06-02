@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+
+import com.github.chrisbanes.photoview.PhotoView;
 import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +26,7 @@ import java.time.format.DateTimeFormatter;
 public class FullscreenFragment extends Fragment {
     private static final String ARG_IMAGE_PATH = "image_path";
     private boolean isDateVisible = false;
+
 
     // Создаем новый экземпляр фрагмента с указанным путем к изображению
     public static FullscreenFragment newInstance(String imagePath) {
@@ -42,7 +45,7 @@ public class FullscreenFragment extends Fragment {
 
         // Если указан путь к изображению, загружаем его с помощью библиотеки Picasso и отображаем в ImageView
         if (imagePath != null) {
-            ImageView imageView = view.findViewById(R.id.image_view);
+            PhotoView imageView = view.findViewById(R.id.image_view);
             imageView.setOnClickListener(v -> {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     toggleDateVisibility(view);
