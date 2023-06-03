@@ -59,16 +59,10 @@ public class FullscreenFragment extends Fragment {
     private void toggleDateVisibility(View view) {
         TextView dateTextView = view.findViewById(R.id.date_text_view);
         Animation fadeInOut = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in_out);
-        Runnable hideDateRunnable = () -> {
-            if (dateTextView.getVisibility() == View.VISIBLE) {
-                dateTextView.setVisibility(View.GONE);
-            }
-        };
         if (dateTextView.getVisibility() == View.VISIBLE) {
-            dateTextView.setVisibility(View.GONE);
-            handler.removeCallbacks(hideDateRunnable);
-        }
-        else {
+            dateTextView.setVisibility(View.INVISIBLE);
+            handler.removeCallbacksAndMessages(null);
+        } else {
             Image image = getImage();
             if (image != null) {
                 String date = null;
@@ -79,10 +73,13 @@ public class FullscreenFragment extends Fragment {
                 dateTextView.setVisibility(View.VISIBLE);
                 dateTextView.startAnimation(fadeInOut);
                 // Скрываем TextView через 5 секунд
-                handler.postDelayed(hideDateRunnable, 5000);
+                handler.postDelayed(() -> {
+                    dateTextView.setVisibility(View.GONE);
+                }, 5000);
             }
         }
     }
+
 
     private Image getImage() {
         if (getArguments() != null) {

@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#FFFFFF"
         android:onClick="onClick"
-        android:text="< Назад"
+        android:text="Назад"
         android:textColor="@color/black" />
 
 </RelativeLayout>
